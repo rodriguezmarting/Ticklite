@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
+import api from "../axios";
 
 type Action = FetchQuestionsAction;
+const FETCH_QUESTIONS_ENDPOINT = "/questions";
 
 export enum ActionTypes {
   fetchQuestions,
@@ -25,13 +27,12 @@ export interface FetchQuestionsAction {
   payload: Question[];
 }
 
-// TODO: Create a fake backend
-// export function fetchQuestions() {
-//   return async (dispatch: Dispatch) => {
-//     const response = await fetch(URL);
-//     dispatch<FetchQuestionsAction>( {
-//       type: ActionTypes.fetchQuestions,
-//       payload: response.data
-//     });
-//   };
-// }
+export function fetchQuestions() {
+  return async (dispatch: Dispatch) => {
+    const response = await api.get<Question[]>(FETCH_QUESTIONS_ENDPOINT);
+    dispatch<FetchQuestionsAction>({
+      type: ActionTypes.fetchQuestions,
+      payload: response.data,
+    });
+  };
+}
