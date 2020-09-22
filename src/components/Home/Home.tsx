@@ -1,8 +1,39 @@
 import React from "react";
-import { Flex } from "@chakra-ui/core";
 
-const Home: React.FC<{}> = () => {
-  return <Flex>Hi!</Flex>;
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/core";
+import Question from "../Question/Question";
+import { IQuestion } from "../../ducks/questions";
+
+interface Props {
+  questions?: IQuestion[];
+}
+
+const Home: React.FC<Props> = ({ questions }) => {
+  return (
+    <Tabs align="center" size="lg" variant="unstyled">
+      <TabList>
+        <Tab>Following</Tab>
+        <Tab>Discover</Tab>
+        <Tab>#</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+          {
+            // TODO: Refactorthis into a QuestionsList component
+            questions && questions.length && (
+              <Question question={questions[0]} />
+            )
+          }
+        </TabPanel>
+        <TabPanel>two</TabPanel>
+        <TabPanel>three</TabPanel>
+      </TabPanels>
+    </Tabs>
+  );
 };
 
 export default Home;
+
+Home.defaultProps = {
+  questions: [],
+};

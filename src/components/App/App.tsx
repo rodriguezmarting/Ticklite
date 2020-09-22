@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, CSSReset, ITheme } from "@chakra-ui/core";
-import { customTheme } from "../../theme";
-import Home from "../Home/Home";
+import { customTheme } from "../../shared/theme";
+import HomeContainer from "../Home/HomeContainer";
 
 // This app will be dark by default for now
 // both modes will be the same
@@ -27,7 +27,7 @@ const App: React.FC<{}> = () => {
       <CSSReset config={config} />
       <Router>
         <Switch>
-          <Route path="/" component={Home} />
+          <Route path="/" component={HomeContainer} />
         </Switch>
       </Router>
     </ThemeProvider>
