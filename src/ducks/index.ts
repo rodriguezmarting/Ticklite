@@ -1,11 +1,10 @@
 import { combineReducers } from "redux";
-import questions, { Question } from "./questions";
+import questions, { IQuestion } from "./questions";
 
 export interface StoreState {
-  questions: Question[];
+  questions: IQuestion[];
 }
 
 export const reducers = combineReducers<StoreState>({
   questions,
 });
-
