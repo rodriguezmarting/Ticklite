@@ -6,5 +6,4 @@ test("loads and displays all three tabs", () => {
   render(<Home />);
   expect(screen.getByText(/following/i)).toBeInTheDocument();
   expect(screen.getByText(/discover/i)).toBeInTheDocument();
-  expect(screen.getByText(/#/i)).toBeInTheDocument();
 });

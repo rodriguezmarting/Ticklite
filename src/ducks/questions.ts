@@ -29,7 +29,6 @@ export interface FetchQuestionsAction {
 
 export function fetchQuestions() {
   return async (dispatch: Dispatch) => {
-    console.log("Hi!");
     const response = await api.get<IQuestion[]>(FETCH_QUESTIONS_ENDPOINT);
     dispatch<FetchQuestionsAction>({
       type: ActionTypes.fetchQuestions,

@@ -14,7 +14,6 @@ const Home: React.FC<Props> = ({ questions }) => {
       <TabList>
         <Tab>Following</Tab>
         <Tab>Discover</Tab>
-        <Tab>#</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
@@ -26,7 +25,6 @@ const Home: React.FC<Props> = ({ questions }) => {
           }
         </TabPanel>
         <TabPanel>two</TabPanel>
-        <TabPanel>three</TabPanel>
       </TabPanels>
     </Tabs>
   );
