@@ -2,7 +2,8 @@
   "questions": [
     {
       "id": "1",
-      "title": "What is your favorite brand?"
+      "title": "What is your favorite brand?",
+      "authorId": "Random User"
     }
   ]
 }
