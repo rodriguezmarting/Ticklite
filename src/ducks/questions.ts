@@ -1,5 +1,7 @@
 import { Dispatch } from "redux";
 import api from "../shared/axios";
+import { StoreState } from ".";
+import { createSelector } from "reselect";
 
 type Action = FetchQuestionsAction;
 const FETCH_QUESTIONS_ENDPOINT = "/questions";
@@ -36,3 +38,9 @@ export function fetchQuestions() {
     });
   };
 }
+
+// TODO: This is a simple test to Reselect, probably will be removed.
+const questionsSelector = (state: StoreState) => state.questions;
+export const selectQuestions = createSelector(questionsSelector, (questions) =>
+  questions.map((q: IQuestion) => ({ id: q.id, title: q.title }))
+);

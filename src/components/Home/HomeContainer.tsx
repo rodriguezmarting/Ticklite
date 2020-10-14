@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import Home from "./Home";
 
+import {
+  IQuestion,
+  fetchQuestions,
+  selectQuestions,
+} from "../../ducks/questions";
 import { useSelector, useDispatch } from "react-redux";
-import { IQuestion, fetchQuestions } from "../../ducks/questions";
-import { StoreState } from "../../ducks";
 
 const HomeContainer: React.FC<{}> = () => {
   const dispatch = useDispatch();
-  const questions: IQuestion[] = useSelector(
-    (state: StoreState) => state.questions
-  );
+  const questions: IQuestion[] = useSelector(selectQuestions);
   useEffect(() => {
     dispatch(fetchQuestions());
   }, [dispatch]);
