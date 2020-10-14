@@ -8,7 +8,7 @@ interface Props {
   questions?: IQuestion[];
 }
 
-const Home: React.FC<Props> = ({ questions }) => {
+const Home: React.FC<Props> = ({ questions = [] }) => {
   return (
     <Tabs align="center" size="lg" variant="unstyled">
       <TabList>
@@ -31,7 +31,3 @@ const Home: React.FC<Props> = ({ questions }) => {
 };
 
 export default Home;
-
-Home.defaultProps = {
-  questions: [],
-};
