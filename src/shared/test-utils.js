@@ -3,7 +3,8 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { customTheme } from "./theme";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import { reducers } from "../ducks";
 import { Provider } from "react-redux";
 
@@ -11,7 +12,7 @@ const customRender = (
   ui,
   {
     initialState = {},
-    store = createStore(reducers, (initialState = {})),
+    store = createStore(reducers, (initialState = {}), applyMiddleware(thunk)),
     ...options
   } = {}
 ) => {
