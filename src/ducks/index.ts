@@ -1,9 +1,6 @@
 import { combineReducers } from "redux";
-import questions, { IQuestion } from "./questions";
-
-export interface StoreState {
-  questions: IQuestion[];
-}
+import questions from "./questions";
+import { StoreState } from "../shared/declarations";
 
 export const reducers = combineReducers<StoreState>({
   questions,

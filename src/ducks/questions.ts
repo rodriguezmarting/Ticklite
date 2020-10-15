@@ -1,46 +1,109 @@
 import { Dispatch } from "redux";
 import api from "../shared/axios";
-import { StoreState } from ".";
 import { createSelector } from "reselect";
-
-type Action = FetchQuestionsAction;
-const FETCH_QUESTIONS_ENDPOINT = "/questions";
-
-export enum ActionTypes {
-  fetchQuestions,
-}
-
-export default function reducer(state: IQuestion[] = [], action: Action) {
-  switch (action.type) {
-    case ActionTypes.fetchQuestions:
-      return action.payload;
-    default:
-      return state;
-  }
-}
+import produce from "immer";
+import { Status, StoreState } from "../shared/declarations";
+import { AxiosResponse, AxiosError } from "axios";
 
 export interface IQuestion {
   id: string;
   title: string;
 }
 
+export type ActionTypes =
+  | "GET_QUESTIONS"
+  | "GET_QUESTIONS_SUCCESS"
+  | "GET_QUESTIONS_ERROR";
+
 export interface FetchQuestionsAction {
-  type: ActionTypes.fetchQuestions;
+  type: "GET_QUESTIONS";
+}
+
+export interface FetchQuestionsSuccessAction {
+  type: "GET_QUESTIONS_SUCCESS";
   payload: IQuestion[];
+}
+
+export interface FetchQuestionsErrorAction {
+  type: "GET_QUESTIONS_ERROR";
+  payload: string;
+}
+
+type Action =
+  | FetchQuestionsAction
+  | FetchQuestionsSuccessAction
+  | FetchQuestionsErrorAction;
+const FETCH_QUESTIONS_ENDPOINT = "/questions";
+
+export interface QuestionsReducerState {
+  data: IQuestion[];
+  status: Status;
+  error: string;
+}
+
+export const questionsInitialState: QuestionsReducerState = {
+  data: [],
+  status: "IDLE",
+  error: "",
+};
+
+export default function reducer(
+  state: QuestionsReducerState = questionsInitialState,
+  action: Action
+): QuestionsReducerState {
+  switch (action.type) {
+    case "GET_QUESTIONS":
+      return produce(state, (draft) => {
+        draft.status = "LOADING";
+      });
+    case "GET_QUESTIONS_SUCCESS":
+      return produce(state, (draft) => {
+        draft.data = action.payload;
+        draft.status = "IDLE";
+        draft.error = "";
+      });
+    case "GET_QUESTIONS_ERROR":
+      return produce(state, (draft) => {
+        draft.status = "ERROR";
+        draft.error = action.payload;
+      });
+    default:
+      return state;
+  }
 }
 
 export function fetchQuestions() {
   return async (dispatch: Dispatch) => {
-    const response = await api.get<IQuestion[]>(FETCH_QUESTIONS_ENDPOINT);
     dispatch<FetchQuestionsAction>({
-      type: ActionTypes.fetchQuestions,
-      payload: response.data,
+      type: "GET_QUESTIONS",
     });
+    api
+      .get<IQuestion[]>(FETCH_QUESTIONS_ENDPOINT)
+      .then((response: AxiosResponse<IQuestion[]>) => {
+        dispatch<FetchQuestionsSuccessAction>({
+          type: "GET_QUESTIONS_SUCCESS",
+          payload: response.data,
+        });
+      })
+      .catch((error: AxiosError) => {
+        dispatch<FetchQuestionsErrorAction>({
+          type: "GET_QUESTIONS_ERROR",
+          payload: error.message,
+        });
+      });
   };
 }
 
 // TODO: This is a simple test to Reselect, probably will be removed.
 const questionsSelector = (state: StoreState) => state.questions;
-export const selectQuestions = createSelector(questionsSelector, (questions) =>
-  questions.map((q: IQuestion) => ({ id: q.id, title: q.title }))
+export const selectQuestions = createSelector(
+  questionsSelector,
+  (questions) => ({
+    data: questions.data.map((q: IQuestion) => ({
+      id: q.id,
+      title: q.title,
+    })),
+    status: questions.status,
+    error: questions.error,
+  })
 );
