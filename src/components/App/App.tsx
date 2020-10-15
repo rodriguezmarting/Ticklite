@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, CSSReset, ITheme } from "@chakra-ui/core";
 import { customTheme } from "../../shared/theme";
-import HomeContainer from "../Home/HomeContainer";
+import HomeContainer from "../Home/Home";
 
 // This app will be dark by default for now
 // both modes will be the same
