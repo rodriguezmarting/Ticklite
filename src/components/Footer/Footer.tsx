@@ -14,7 +14,7 @@ import { Person as ProfileOutline } from "@emotion-icons/bootstrap/Person";
 const Footer: React.FC = () => {
   const location = useLocation();
   return (
-    <Flex marginY={4} marginX={6} justify="space-between">
+    <Flex bg="gray.700" paddingY={4} paddingX={6} justify="space-between">
       <Home selected={location.pathname === `/`} />
       <Trending selected={location.pathname === `/trending`} />
       <Box data-testid="plus-square-icon" as={PlusSquare} w={10} />
