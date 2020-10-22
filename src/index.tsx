@@ -1,14 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { store } from "./ducks/store";
 import App from "./components/App/App";
 import * as serviceWorker from "./serviceWorker";
+import { customTheme, config } from "./shared/theme";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store()}>
-      <App />
+      <ThemeProvider theme={customTheme}>
+        <CSSReset config={config} />
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
