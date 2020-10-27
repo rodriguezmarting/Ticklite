@@ -6,8 +6,15 @@ import { Status, StoreState } from "../shared/declarations";
 import { AxiosResponse, AxiosError } from "axios";
 
 export interface IQuestion {
-  id: string;
+  id: number;
   title: string;
+  authorId?: number;
+  authorName: string;
+  options: string[];
+  caption?: string;
+  pinned: boolean;
+  answered: boolean;
+  answeredAt?: string;
 }
 
 export type ActionTypes =
@@ -43,7 +50,7 @@ export interface QuestionsReducerState {
 
 export const questionsInitialState: QuestionsReducerState = {
   data: [],
-  status: "IDLE",
+  status: "LOADING",
   error: "",
 };
 
@@ -59,7 +66,7 @@ export default function reducer(
     case "GET_QUESTIONS_SUCCESS":
       return produce(state, (draft) => {
         draft.data = action.payload;
-        draft.status = "IDLE";
+        draft.status = "SUCCESS";
         draft.error = "";
       });
     case "GET_QUESTIONS_ERROR":
@@ -99,10 +106,25 @@ const questionsSelector = (state: StoreState) => state.questions;
 export const selectQuestions = createSelector(
   questionsSelector,
   (questions) => ({
-    data: questions.data.map((q: IQuestion) => ({
-      id: q.id,
-      title: q.title,
-    })),
+    data: questions.data.map(
+      ({
+        id,
+        title,
+        authorName,
+        options,
+        caption,
+        pinned,
+        answered,
+      }: IQuestion) => ({
+        id,
+        title,
+        authorName,
+        options,
+        caption,
+        pinned,
+        answered,
+      })
+    ),
     status: questions.status,
     error: questions.error,
   })

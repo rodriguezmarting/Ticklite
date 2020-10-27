@@ -1,9 +1,15 @@
 {
   "questions": [
     {
-      "id": "1",
-      "title": "What is your favorite brand?",
-      "authorId": "Random User"
+      "id": 1,
+      "title": "Which is your favorite brand?",
+      "authorId": 1,
+      "authorName": "Random User",
+      "options": ["Nike", "Adidas"],
+      "caption": "Curious about this one 🤔 #brands #Nike #Adidas #Sports",
+      "pinned": false,
+      "answered": false,
+      "answeredAt": ""
     }
   ]
 }
