@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
     <Flex bg="gray.700" paddingY={4} paddingX={6} justify="space-between">
       <Home selected={location.pathname === `/`} />
       <Trending selected={location.pathname === `/trending`} />
-      <Box data-testid="plus-square-icon" as={PlusSquare} w={10} />
+      <Box data-testid="plus-square-icon" as={PlusSquare} w={8} />
       <Pinned selected={location.pathname === `/pinned`} />
       <Profile selected={location.pathname === `/profile`} />
     </Flex>
@@ -30,11 +30,11 @@ interface Props {
 
 const Home: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="home-solid-icon" as={HomeSolid} w={10} />;
+    return <Box data-testid="home-solid-icon" as={HomeSolid} w={8} />;
   } else {
     return (
       <Link to={"/"}>
-        <Box data-testid="home-outline-icon" as={HomeOutline} w={10} />
+        <Box data-testid="home-outline-icon" as={HomeOutline} w={8} />
       </Link>
     );
   }
@@ -42,11 +42,11 @@ const Home: React.FC<Props> = ({ selected }) => {
 
 const Trending: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="trending-solid-icon" as={TrendingSolid} w={10} />;
+    return <Box data-testid="trending-solid-icon" as={TrendingSolid} w={8} />;
   } else {
     return (
       <Link to={"/trending"}>
-        <Box data-testid="trending-outline-icon" as={TrendingOutline} w={10} />
+        <Box data-testid="trending-outline-icon" as={TrendingOutline} w={8} />
       </Link>
     );
   }
@@ -54,11 +54,11 @@ const Trending: React.FC<Props> = ({ selected }) => {
 
 const Pinned: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="pinned-solid-icon" as={PinnedSolid} w={10} />;
+    return <Box data-testid="pinned-solid-icon" as={PinnedSolid} w={8} />;
   } else {
     return (
       <Link to={"/pinned"}>
-        <Box data-testid="pinned-outline-icon" as={PinnedOutline} w={10} />
+        <Box data-testid="pinned-outline-icon" as={PinnedOutline} w={8} />
       </Link>
     );
   }
@@ -66,11 +66,11 @@ const Pinned: React.FC<Props> = ({ selected }) => {
 
 const Profile: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="profile-solid-icon" as={ProfileSolid} w={10} />;
+    return <Box data-testid="profile-solid-icon" as={ProfileSolid} w={8} />;
   } else {
     return (
       <Link to={"/profile"}>
-        <Box data-testid="profile-outline-icon" as={ProfileOutline} w={10} />
+        <Box data-testid="profile-outline-icon" as={ProfileOutline} w={8} />
       </Link>
     );
   }
