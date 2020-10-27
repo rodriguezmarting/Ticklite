@@ -1,6 +1,14 @@
 import React, { useEffect } from "react";
 
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex } from "@chakra-ui/core";
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Flex,
+  Box,
+} from "@chakra-ui/core";
 import Question from "../Question/Question";
 import {
   QuestionsReducerState,
@@ -11,7 +19,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 interface Props {
-  questions?: QuestionsReducerState;
+  questions: QuestionsReducerState;
 }
 
 const HomeContainer: React.FC<{}> = () => {
@@ -27,27 +35,61 @@ const HomeContainer: React.FC<{}> = () => {
 const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
   return (
     <Flex direction="column" flex={1}>
-      <Tabs align="center" size="lg" variant="unstyled">
+      <Tabs
+        display="flex"
+        flexDirection="column"
+        align="center"
+        size="lg"
+        variant="unstyled"
+        flex={1}
+      >
         <TabList>
-          <Tab>Following</Tab>
-          <Tab>Discover</Tab>
+          <Tab
+            fontSize="xl"
+            fontWeight="thin"
+            _selected={{ fontWeight: "bold" }}
+          >
+            Following
+          </Tab>
+          <Tab
+            fontSize="xl"
+            fontWeight="thin"
+            _selected={{ fontWeight: "bold" }}
+          >
+            Discover
+          </Tab>
         </TabList>
-        <TabPanels>
-          <TabPanel>
-            {
-              // TODO: Refactorthis into a QuestionsList component
-              questions &&
-                questions.data.length &&
-                questions.status === "IDLE" && (
-                  <Question question={questions.data[0]} />
-                )
-            }
+        <TabPanels display="flex" flexDirection="column" flex={1}>
+          <TabPanel display="flex" flexDirection="column" flex={1}>
+            <Questions questions={questions} />
           </TabPanel>
-          <TabPanel>two</TabPanel>
+          <TabPanel display="flex" flexDirection="column" flex={1}>
+            <Questions questions={questions} />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Flex>
   );
+};
+
+const Questions: React.FC<Props> = ({ questions }) => {
+  switch (questions.status) {
+    case "LOADING": {
+      return <Box>Loading...</Box>;
+    }
+    case "ERROR": {
+      return <Box>{questions.error}</Box>;
+    }
+    case "SUCCESS": {
+      return (
+        <>
+          {questions.data.map((question) => (
+            <Question question={question} />
+          ))}
+        </>
+      );
+    }
+  }
 };
 
 export default HomeContainer;
