@@ -8,12 +8,14 @@ import { AxiosResponse, AxiosError } from "axios";
 export interface IQuestion {
   id: number;
   title: string;
-  authorId?: number;
-  authorName: string;
   options: string[];
   caption?: string;
-  pinned: boolean;
-  answered: boolean;
+  authorId?: number;
+  authorName: string;
+  pins: number;
+  isPinned: boolean;
+  isAnswered?: boolean;
+  createdAt?: string;
   answeredAt?: string;
 }
 
@@ -110,19 +112,21 @@ export const selectQuestions = createSelector(
       ({
         id,
         title,
-        authorName,
         options,
         caption,
-        pinned,
-        answered,
+        authorName,
+        pins,
+        isPinned,
+        isAnswered,
       }: IQuestion) => ({
         id,
         title,
-        authorName,
         options,
         caption,
-        pinned,
-        answered,
+        authorName,
+        pins,
+        isPinned,
+        isAnswered,
       })
     ),
     status: questions.status,

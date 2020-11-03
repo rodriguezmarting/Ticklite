@@ -18,7 +18,11 @@ export const ParseCaption: React.FC<ParseCaptionProps> = ({ caption }) => {
       parsedWord = word.concat(" ");
     }
     if (word.charAt(0) === "#") {
-      return <span style={{ fontWeight: 700 }}>{parsedWord}</span>;
+      return (
+        <span key={index} style={{ fontWeight: 700 }}>
+          {parsedWord}
+        </span>
+      );
     }
     return parsedWord;
   });

@@ -84,7 +84,7 @@ const Questions: React.FC<Props> = ({ questions }) => {
       return (
         <>
           {questions.data.map((question) => (
-            <Question question={question} />
+            <Question key={question.id} question={question} />
           ))}
         </>
       );
