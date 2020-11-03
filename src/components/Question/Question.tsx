@@ -48,7 +48,7 @@ const Question: React.FC<Props> = ({ question }) => {
       </Flex>
       <Flex direction="column" paddingX={6} paddingY={4} fontSize="md">
         <Flex direction="row" mb={2}>
-          <PinnedQuestion pinned={question.pinned} />
+          <PinnedQuestion isPinned={question.isPinned} />
           <Box
             data-testid="share-icon"
             as={Share}
@@ -60,7 +60,7 @@ const Question: React.FC<Props> = ({ question }) => {
           {/* <Box data-testid="settings-icon" as={Settings} w={10} /> */}
         </Flex>
         <Flex>
-          <Text fontWeight="medium">60</Text>
+          <Text fontWeight="medium">{question.pins}</Text>
           <Text>&nbsp; Pins</Text>
         </Flex>
         <Stack
@@ -88,11 +88,11 @@ const Question: React.FC<Props> = ({ question }) => {
 };
 
 interface PinnedProps {
-  pinned: boolean;
+  isPinned: boolean;
 }
 
-const PinnedQuestion: React.FC<PinnedProps> = ({ pinned }) => {
-  if (pinned) {
+const PinnedQuestion: React.FC<PinnedProps> = ({ isPinned }) => {
+  if (isPinned) {
     return (
       <Box mr={2} data-testid="pinned-solid-icon" as={PinnedSolid} w={8} />
     );

@@ -8,6 +8,8 @@ import * as serviceWorker from "./serviceWorker";
 import { customTheme, config, GlobalStyles } from "./shared/theme";
 import { Global } from "@emotion/core";
 
+import "pure-react-carousel/dist/react-carousel.es.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store()}>

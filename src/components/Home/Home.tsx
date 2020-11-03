@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   Tabs,
@@ -18,6 +18,9 @@ import {
 } from "../../ducks/questions";
 import { useSelector, useDispatch } from "react-redux";
 
+import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
+import "./Home.css";
+
 interface Props {
   questions: QuestionsReducerState;
 }
@@ -33,6 +36,19 @@ const HomeContainer: React.FC<{}> = () => {
 };
 
 const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
+  const tabRef = useRef<HTMLDivElement>(null);
+
+  const dimensions = {
+    height: 0,
+    width: 0,
+  };
+
+  if (tabRef && tabRef.current) {
+    const rect = tabRef.current.getBoundingClientRect();
+    dimensions.width = rect.width;
+    dimensions.height = rect.height;
+  }
+
   return (
     <Flex direction="column" flex={1}>
       <Tabs
@@ -60,11 +76,19 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
           </Tab>
         </TabList>
         <TabPanels display="flex" flexDirection="column" flex={1}>
-          <TabPanel display="flex" flexDirection="column" flex={1}>
-            <Questions questions={questions} />
+          <TabPanel ref={tabRef} display="flex" flexDirection="column" flex={1}>
+            <Questions
+              height={dimensions.height}
+              width={dimensions.width}
+              questions={questions}
+            />
           </TabPanel>
           <TabPanel display="flex" flexDirection="column" flex={1}>
-            <Questions questions={questions} />
+            <Questions
+              height={dimensions.height}
+              width={dimensions.width}
+              questions={questions}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -72,7 +96,13 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
   );
 };
 
-const Questions: React.FC<Props> = ({ questions }) => {
+interface QuestionsProps {
+  questions: QuestionsReducerState;
+  width: number;
+  height: number;
+}
+
+const Questions: React.FC<QuestionsProps> = ({ questions, height, width }) => {
   switch (questions.status) {
     case "LOADING": {
       return <Box>Loading...</Box>;
@@ -82,11 +112,20 @@ const Questions: React.FC<Props> = ({ questions }) => {
     }
     case "SUCCESS": {
       return (
-        <>
-          {questions.data.map((question) => (
-            <Question key={question.id} question={question} />
-          ))}
-        </>
+        <CarouselProvider
+          naturalSlideWidth={width}
+          naturalSlideHeight={height}
+          totalSlides={questions.data.length}
+          orientation="vertical"
+        >
+          <Slider>
+            {questions.data.map((question, index) => (
+              <Slide innerClassName="slide-full-height" index={index}>
+                <Question key={question.id} question={question} />
+              </Slide>
+            ))}
+          </Slider>
+        </CarouselProvider>
       );
     }
   }
