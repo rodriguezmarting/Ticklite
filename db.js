@@ -9,7 +9,7 @@ const trendingHashtags = [
   },
   {
     id: 2,
-    title: "Brands",
+    title: "#Brands",
     interactions: 2840000,
     topQuestionsIds: [1, 4, 5],
   },

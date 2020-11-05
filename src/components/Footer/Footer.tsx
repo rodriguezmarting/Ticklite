@@ -45,7 +45,7 @@ const Trending: React.FC<Props> = ({ selected }) => {
     return <Box data-testid="trending-solid-icon" as={TrendingSolid} w={8} />;
   } else {
     return (
-      <Link to={"/trending"}>
+      <Link to={"/trendings"}>
         <Box data-testid="trending-outline-icon" as={TrendingOutline} w={8} />
       </Link>
     );

@@ -10,10 +10,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import QuestionsList from "../QuestionsList/QuestionsList";
 
-interface Props {
-  questions: QuestionsReducerState;
-}
-
 const HomeContainer: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const questions: QuestionsReducerState = useSelector(selectQuestions);
@@ -23,6 +19,10 @@ const HomeContainer: React.FC<{}> = () => {
 
   return <Home questions={questions} />;
 };
+
+interface Props {
+  questions: QuestionsReducerState;
+}
 
 const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
   const tabRef = useRef<HTMLDivElement>(null);
