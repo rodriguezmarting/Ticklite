@@ -17,7 +17,12 @@ interface Props {
 const Question: React.FC<Props> = ({ question }) => {
   return (
     <Flex direction="column" flex={1}>
-      <Text paddingX={6} paddingY={4} fontSize="lg">
+      <Text
+        paddingX={6}
+        paddingY={4}
+        fontSize="lg"
+        data-testid="question-title"
+      >
         {question.title}
       </Text>
       <Flex flex={1}>

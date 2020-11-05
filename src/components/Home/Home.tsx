@@ -1,15 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import {
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Flex,
-  Box,
-} from "@chakra-ui/core";
-import Question from "../Question/Question";
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex } from "@chakra-ui/core";
 import {
   QuestionsReducerState,
   questionsInitialState,
@@ -17,9 +8,7 @@ import {
   selectQuestions,
 } from "../../ducks/questions";
 import { useSelector, useDispatch } from "react-redux";
-
-import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
-import "./Home.css";
+import QuestionsList from "../QuestionsList/QuestionsList";
 
 interface Props {
   questions: QuestionsReducerState;
@@ -77,14 +66,14 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
         </TabList>
         <TabPanels display="flex" flexDirection="column" flex={1}>
           <TabPanel ref={tabRef} display="flex" flexDirection="column" flex={1}>
-            <Questions
+            <QuestionsList
               height={dimensions.height}
               width={dimensions.width}
               questions={questions}
             />
           </TabPanel>
           <TabPanel display="flex" flexDirection="column" flex={1}>
-            <Questions
+            <QuestionsList
               height={dimensions.height}
               width={dimensions.width}
               questions={questions}
@@ -94,41 +83,6 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
       </Tabs>
     </Flex>
   );
-};
-
-interface QuestionsProps {
-  questions: QuestionsReducerState;
-  width: number;
-  height: number;
-}
-
-const Questions: React.FC<QuestionsProps> = ({ questions, height, width }) => {
-  switch (questions.status) {
-    case "LOADING": {
-      return <Box>Loading...</Box>;
-    }
-    case "ERROR": {
-      return <Box>{questions.error}</Box>;
-    }
-    case "SUCCESS": {
-      return (
-        <CarouselProvider
-          naturalSlideWidth={width}
-          naturalSlideHeight={height}
-          totalSlides={questions.data.length}
-          orientation="vertical"
-        >
-          <Slider>
-            {questions.data.map((question, index) => (
-              <Slide innerClassName="slide-full-height" index={index}>
-                <Question key={question.id} question={question} />
-              </Slide>
-            ))}
-          </Slider>
-        </CarouselProvider>
-      );
-    }
-  }
 };
 
 export default HomeContainer;
