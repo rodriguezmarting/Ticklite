@@ -50,6 +50,7 @@ const questions = [
       "This question make me hungry 🍔🍟. #McDonalds #BurgerKing #Brands #restaurants",
   },
 ];
+
 // index.js
 module.exports = () => {
   const data = { questions: [], trendingHashtags };
