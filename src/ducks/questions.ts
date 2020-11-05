@@ -15,8 +15,8 @@ export interface IQuestion {
   pins: number;
   isPinned: boolean;
   isAnswered?: boolean;
-  createdAt?: string;
-  answeredAt?: string;
+  createdAt?: string | Date;
+  answeredAt?: string | Date;
 }
 
 export type ActionTypes =
