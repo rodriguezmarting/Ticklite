@@ -39,3 +39,14 @@ export const Header: React.FC = ({ children }) => {
     </Flex>
   );
 };
+
+export const formatNumber = (n: number) => {
+  return Intl.NumberFormat("en-US", {
+    // TS does not support notation and compactDisplay
+    // options for now: https://github.com/microsoft/TypeScript/issues/36533
+    //@ts-ignore
+    notation: "compact",
+    compactDisplay: "short",
+    maximumFractionDigits: 1,
+  }).format(n);
+};
