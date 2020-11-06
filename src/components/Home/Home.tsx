@@ -48,7 +48,7 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
         variant="unstyled"
         flex={1}
       >
-        <TabList>
+        <TabList bg="gray.700">
           <Tab
             fontSize="xl"
             fontWeight="thin"
