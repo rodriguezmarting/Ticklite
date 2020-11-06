@@ -5,7 +5,7 @@ import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { customTheme } from "./theme";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import { reducers } from "../ducks";
+import { reducers } from "../ducks/store";
 import { Provider } from "react-redux";
 import faker from "faker";
 
@@ -65,4 +65,25 @@ export const generateQuestionsList = (numberOfQuestions = 4) => {
     questions.push(question);
   }
   return questions;
+};
+
+export const generateTrending = (numberOfQuestions = 4) => {
+  return {
+    id: faker.random.number(1000),
+    title: faker.name.title(),
+    interactions: faker.random.number({ min: 100000 }),
+    topQuestions: generateQuestionsList(numberOfQuestions),
+  };
+};
+
+export const generateTrendingList = (
+  numberOfTrendings = 4,
+  questionsPerTrending
+) => {
+  const trendings = [];
+  for (let i = 0; i < numberOfTrendings; i++) {
+    const trending = generateTrending(questionsPerTrending);
+    trendings.push(trending);
+  }
+  return trendings;
 };
