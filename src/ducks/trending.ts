@@ -3,67 +3,68 @@ import api from "../shared/axios";
 import produce from "immer";
 import { Status, StoreState } from "../shared/declarations";
 import { AxiosResponse, AxiosError } from "axios";
+import { IQuestion } from "./questions";
 
 export interface ITrending {
   id: number;
   title: string;
   interactions: number;
-  topQuestionsIds: number[];
+  topQuestions: IQuestion[];
 }
 
 export type ActionTypes =
-  | "GET_TRENDINGS"
-  | "GET_TRENDINGS_SUCCESS"
-  | "GET_TRENDINGS_ERROR";
+  | "GET_TRENDING"
+  | "GET_TRENDING_SUCCESS"
+  | "GET_TRENDING_ERROR";
 
-export interface FetchTrendingsAction {
-  type: "GET_TRENDINGS";
+export interface FetchTrendingAction {
+  type: "GET_TRENDING";
 }
 
-export interface FetchTrendingsSuccessAction {
-  type: "GET_TRENDINGS_SUCCESS";
+export interface FetchTrendingSuccessAction {
+  type: "GET_TRENDING_SUCCESS";
   payload: ITrending[];
 }
 
-export interface FetchTrendingsErrorAction {
-  type: "GET_TRENDINGS_ERROR";
+export interface FetchTrendingErrorAction {
+  type: "GET_TRENDING_ERROR";
   payload: string;
 }
 
 type Action =
-  | FetchTrendingsAction
-  | FetchTrendingsSuccessAction
-  | FetchTrendingsErrorAction;
-const FETCH_TRENDINGS_ENDPOINT = "/trendingHashtags";
+  | FetchTrendingAction
+  | FetchTrendingSuccessAction
+  | FetchTrendingErrorAction;
+const FETCH_TRENDINGS_ENDPOINT = "/trending";
 
-export interface TrendingsReducerState {
+export interface TrendingReducerState {
   data: ITrending[];
   status: Status;
   error: string;
 }
 
-export const trendingsInitialState: TrendingsReducerState = {
+export const trendingInitialState: TrendingReducerState = {
   data: [],
   status: "LOADING",
   error: "",
 };
 
 export default function reducer(
-  state: TrendingsReducerState = trendingsInitialState,
+  state: TrendingReducerState = trendingInitialState,
   action: Action
-): TrendingsReducerState {
+): TrendingReducerState {
   switch (action.type) {
-    case "GET_TRENDINGS":
+    case "GET_TRENDING":
       return produce(state, (draft) => {
         draft.status = "LOADING";
       });
-    case "GET_TRENDINGS_SUCCESS":
+    case "GET_TRENDING_SUCCESS":
       return produce(state, (draft) => {
         draft.data = action.payload;
         draft.status = "SUCCESS";
         draft.error = "";
       });
-    case "GET_TRENDINGS_ERROR":
+    case "GET_TRENDING_ERROR":
       return produce(state, (draft) => {
         draft.status = "ERROR";
         draft.error = action.payload;
@@ -73,26 +74,26 @@ export default function reducer(
   }
 }
 
-export function fetchTrendings() {
+export function fetchTrending() {
   return async (dispatch: Dispatch) => {
-    dispatch<FetchTrendingsAction>({
-      type: "GET_TRENDINGS",
+    dispatch<FetchTrendingAction>({
+      type: "GET_TRENDING",
     });
     api
       .get<ITrending[]>(FETCH_TRENDINGS_ENDPOINT)
       .then((response: AxiosResponse<ITrending[]>) => {
-        dispatch<FetchTrendingsSuccessAction>({
-          type: "GET_TRENDINGS_SUCCESS",
+        dispatch<FetchTrendingSuccessAction>({
+          type: "GET_TRENDING_SUCCESS",
           payload: response.data,
         });
       })
       .catch((error: AxiosError) => {
-        dispatch<FetchTrendingsErrorAction>({
-          type: "GET_TRENDINGS_ERROR",
+        dispatch<FetchTrendingErrorAction>({
+          type: "GET_TRENDING_ERROR",
           payload: error.message,
         });
       });
   };
 }
 
-export const trendingsSelector = (state: StoreState) => state.trendings;
+export const trendingSelector = (state: StoreState) => state.trending;

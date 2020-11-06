@@ -1,20 +1,5 @@
 const faker = require("faker");
 
-const trendingHashtags = [
-  {
-    id: 1,
-    title: "#sports",
-    interactions: 7130000000,
-    topQuestionsIds: [1, 2, 3],
-  },
-  {
-    id: 2,
-    title: "#Brands",
-    interactions: 2840000,
-    topQuestionsIds: [1, 4, 5],
-  },
-];
-
 const questions = [
   {
     id: 1,
@@ -44,16 +29,31 @@ const questions = [
   },
   {
     id: 5,
-    title: "Favorit fast food restaurant ?",
+    title: "Favorite fast food restaurant ?",
     options: ["Burger King", "McDonalds"],
     caption:
       "This question make me hungry 🍔🍟. #McDonalds #BurgerKing #Brands #restaurants",
   },
 ];
 
+const trending = [
+  {
+    id: 1,
+    title: "#sports",
+    interactions: 7130000000,
+    topQuestions: [],
+  },
+  {
+    id: 2,
+    title: "#Brands",
+    interactions: 28450000,
+    topQuestions: [],
+  },
+];
+
 // index.js
 module.exports = () => {
-  const data = { questions: [], trendingHashtags };
+  const data = { questions: [], trending };
 
   for (let i = 0; i < questions.length; i++) {
     const id = questions[i].id;
@@ -89,6 +89,18 @@ module.exports = () => {
       answeredAt,
     });
   }
+
+  data.trending[0].topQuestions = [
+    data.questions[0],
+    data.questions[1],
+    data.questions[2],
+  ];
+
+  data.trending[1].topQuestions = [
+    data.questions[0],
+    data.questions[3],
+    data.questions[4],
+  ];
 
   return data;
 };
