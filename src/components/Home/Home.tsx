@@ -9,6 +9,7 @@ import {
 } from "../../ducks/questions";
 import { useSelector, useDispatch } from "react-redux";
 import QuestionsList from "../QuestionsList/QuestionsList";
+import { useDimensions } from "../../shared/useDimensions";
 
 const HomeContainer: React.FC<{}> = () => {
   const dispatch = useDispatch();
@@ -26,17 +27,7 @@ interface Props {
 
 const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
   const tabRef = useRef<HTMLDivElement>(null);
-
-  const dimensions = {
-    height: 0,
-    width: 0,
-  };
-
-  if (tabRef && tabRef.current) {
-    const rect = tabRef.current.getBoundingClientRect();
-    dimensions.width = rect.width;
-    dimensions.height = rect.height;
-  }
+  const { width, height } = useDimensions(tabRef);
 
   return (
     <Flex direction="column" flex={1}>
@@ -67,15 +58,15 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
         <TabPanels display="flex" flexDirection="column" flex={1}>
           <TabPanel ref={tabRef} display="flex" flexDirection="column" flex={1}>
             <QuestionsList
-              height={dimensions.height}
-              width={dimensions.width}
+              height={height}
+              width={width}
               questions={questions}
             />
           </TabPanel>
           <TabPanel display="flex" flexDirection="column" flex={1}>
             <QuestionsList
-              height={dimensions.height}
-              width={dimensions.width}
+              height={height}
+              width={width}
               questions={questions}
             />
           </TabPanel>
