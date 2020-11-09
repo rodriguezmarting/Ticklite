@@ -42,6 +42,7 @@ type Action =
   | FetchQuestionsAction
   | FetchQuestionsSuccessAction
   | FetchQuestionsErrorAction;
+
 const FETCH_QUESTIONS_ENDPOINT = "/questions";
 
 export interface QuestionsReducerState {

@@ -6,6 +6,7 @@ import TrendingContainer from "../Trending/Trending";
 import ProfileContainer from "../Profile/Profile";
 import PinnedContainer from "../Pinned/Pinned";
 import Footer from "../Footer/Footer";
+import HashtagContainer from "../Hashtag/Hashtag";
 
 const App: React.FC<{}> = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC<{}> = () => {
             <Route path="/trending" component={TrendingContainer} />
             <Route path="/pinned" component={PinnedContainer} />
             <Route path="/profile" component={ProfileContainer} />
+            <Route path="/hashtag" component={HashtagContainer} />
           </Switch>
         </Flex>
         <Footer />

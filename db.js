@@ -51,9 +51,14 @@ const trending = [
   },
 ];
 
+const hashtag = [
+  { id: 1, title: trending[0].title },
+  { id: 2, title: trending[1].title },
+];
+
 // index.js
 module.exports = () => {
-  const data = { questions: [], trending };
+  const data = { questions: [], trending, hashtag };
 
   for (let i = 0; i < questions.length; i++) {
     const id = questions[i].id;
@@ -101,6 +106,10 @@ module.exports = () => {
     data.questions[3],
     data.questions[4],
   ];
+
+  data.hashtag[0].questions = data.trending[0].topQuestions;
+
+  data.hashtag[1].questions = data.trending[1].topQuestions;
 
   return data;
 };

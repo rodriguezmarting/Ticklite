@@ -11,6 +11,7 @@ import {
 import { Box, Flex, Divider } from "@chakra-ui/core";
 import { IQuestion } from "../../ducks/questions";
 import { formatNumber, Header } from "../../shared/utils";
+import { useHistory } from "react-router-dom";
 
 const TrendingContainer: React.FC<{}> = () => {
   const dispatch = useDispatch();
@@ -65,8 +66,18 @@ interface TrendingProps {
 }
 
 const Trending: React.FC<TrendingProps> = ({ trending, trendingIndex }) => {
+  const history = useHistory();
+
   return (
-    <Flex direction="column">
+    <Flex
+      direction="column"
+      onClick={() =>
+        history.push({
+          pathname: "/hashtag",
+          state: { id: trending.id },
+        })
+      }
+    >
       <Flex
         justify="space-between"
         align="center"

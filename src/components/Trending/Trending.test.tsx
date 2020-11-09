@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  screen,
-  generateQuestionsList,
-  generateTrendingList,
-} from "../../shared/test-utils";
+import { render, screen, generateTrendingList } from "../../shared/test-utils";
 import { TrendingPage } from "./Trending";
 import { Status } from "../../shared/declarations";
 
