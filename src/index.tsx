@@ -9,6 +9,8 @@ import { customTheme, config, GlobalStyles } from "./shared/theme";
 import { Global } from "@emotion/core";
 
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallBack from "./components/ErrorFallBack/ErrorFallBack";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +18,9 @@ ReactDOM.render(
       <ThemeProvider theme={customTheme}>
         <Global styles={GlobalStyles} />
         <CSSReset config={config} />
-        <App />
+        <ErrorBoundary FallbackComponent={ErrorFallBack}>
+          <App />
+        </ErrorBoundary>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,
