@@ -1,6 +1,13 @@
 import React, { useEffect, useRef } from "react";
 
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex } from "@chakra-ui/core";
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Flex,
+} from "@chakra-ui/react";
 import {
   QuestionsReducerState,
   questionsInitialState,
@@ -56,14 +63,20 @@ const Home: React.FC<Props> = ({ questions = questionsInitialState }) => {
           </Tab>
         </TabList>
         <TabPanels display="flex" flexDirection="column" flex={1}>
-          <TabPanel ref={tabRef} display="flex" flexDirection="column" flex={1}>
+          <TabPanel
+            p={0}
+            ref={tabRef}
+            display="flex"
+            flexDirection="column"
+            flex={1}
+          >
             <QuestionsList
               height={height}
               width={width}
               questions={questions}
             />
           </TabPanel>
-          <TabPanel display="flex" flexDirection="column" flex={1}>
+          <TabPanel p={0} display="flex" flexDirection="column" flex={1}>
             <QuestionsList
               height={height}
               width={width}

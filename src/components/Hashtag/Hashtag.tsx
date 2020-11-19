@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import QuestionsList from "../QuestionsList/QuestionsList";
 import { Header } from "../../shared/utils";
-import { Flex } from "@chakra-ui/core";
+import { Flex } from "@chakra-ui/react";
 import { useDimensions } from "../../shared/useDimensions";
 import { useSelector, useDispatch } from "react-redux";
 import {

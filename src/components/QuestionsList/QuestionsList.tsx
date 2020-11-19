@@ -1,6 +1,6 @@
 import React from "react";
 import { QuestionsReducerState } from "../../ducks/questions";
-import { Box } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/react";
 import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
 import Question from "../Question/Question";
 

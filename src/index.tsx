@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { store } from "./ducks/store";
 import App from "./components/App/App";
 import * as serviceWorker from "./serviceWorker";
-import { customTheme, config, GlobalStyles } from "./shared/theme";
-import { Global } from "@emotion/core";
+import { customTheme, GlobalStyles } from "./shared/theme";
+import { Global } from "@emotion/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { ErrorBoundary } from "react-error-boundary";
@@ -15,13 +15,12 @@ import ErrorFallBack from "./components/ErrorFallBack/ErrorFallBack";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store()}>
-      <ThemeProvider theme={customTheme}>
+      <ChakraProvider theme={customTheme}>
         <Global styles={GlobalStyles} />
-        <CSSReset config={config} />
         <ErrorBoundary FallbackComponent={ErrorFallBack}>
           <App />
         </ErrorBoundary>
-      </ThemeProvider>
+      </ChakraProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

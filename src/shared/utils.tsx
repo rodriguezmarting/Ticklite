@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Flex } from "@chakra-ui/core";
+import { Text, Flex } from "@chakra-ui/react";
 
 interface ParseCaptionProps {
   caption: string | undefined;
@@ -27,7 +27,7 @@ export const ParseCaption: React.FC<ParseCaptionProps> = ({ caption }) => {
     return parsedWord;
   });
 
-  return <Text>{parsedWords}</Text>;
+  return <Text textAlign="left">{parsedWords}</Text>;
 };
 
 export const Header: React.FC = ({ children }) => {

@@ -1,23 +1,32 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/core";
-import { HomeFill as HomeSolid } from "@emotion-icons/octicons/HomeFill";
-import { Home as HomeOutline } from "@emotion-icons/octicons/Home";
-import { Fire as TrendingSolid } from "@emotion-icons/remix-fill/Fire";
-import { Fire as TrendingOutline } from "@emotion-icons/remix-line/Fire";
-import { PlusSquare } from "@emotion-icons/boxicons-solid/PlusSquare";
-import { Pushpin2 as PinnedSolid } from "@emotion-icons/remix-fill/Pushpin2";
-import { Pushpin2 as PinnedOutline } from "@emotion-icons/remix-line/Pushpin2";
-import { PersonFill as ProfileSolid } from "@emotion-icons/bootstrap/PersonFill";
-import { Person as ProfileOutline } from "@emotion-icons/bootstrap/Person";
+import { Flex } from "@chakra-ui/react";
+import {
+  PlusSquareIcon,
+  HomeSolidIcon,
+  HomeOutlineIcon,
+  TrendingSolidIcon,
+  TrendingOutlineIcon,
+  PinnedSolidIcon,
+  PinnedOutlineIcon,
+  ProfileSolidIcon,
+  ProfileOutlineIcon,
+} from "../../shared/theme";
 
 const Footer: React.FC = () => {
   const location = useLocation();
+
+  if (location.pathname.match(/\/ask/i)) {
+    return null;
+  }
+
   return (
     <Flex bg="gray.700" paddingY={4} paddingX={6} justify="space-between">
       <Home selected={location.pathname === `/`} />
       <Trending selected={location.pathname === `/trending`} />
-      <Box data-testid="plus-square-icon" as={PlusSquare} w={8} />
+      <Link to={"/ask"}>
+        <PlusSquareIcon data-testid="plus-square-icon" w={8} h={8} />
+      </Link>
       <Pinned selected={location.pathname === `/pinned`} />
       <Profile selected={location.pathname === `/profile`} />
     </Flex>
@@ -30,11 +39,11 @@ interface Props {
 
 const Home: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="home-solid-icon" as={HomeSolid} w={8} />;
+    return <HomeSolidIcon data-testid="home-solid-icon" w={8} h={8} />;
   } else {
     return (
       <Link to={"/"}>
-        <Box data-testid="home-outline-icon" as={HomeOutline} w={8} />
+        <HomeOutlineIcon data-testid="home-outline-icon" w={8} h={8} />
       </Link>
     );
   }
@@ -42,11 +51,11 @@ const Home: React.FC<Props> = ({ selected }) => {
 
 const Trending: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="trending-solid-icon" as={TrendingSolid} w={8} />;
+    return <TrendingSolidIcon data-testid="trending-solid-icon" w={8} h={8} />;
   } else {
     return (
       <Link to={"/trending"}>
-        <Box data-testid="trending-outline-icon" as={TrendingOutline} w={8} />
+        <TrendingOutlineIcon data-testid="trending-outline-icon" w={8} h={8} />
       </Link>
     );
   }
@@ -54,11 +63,11 @@ const Trending: React.FC<Props> = ({ selected }) => {
 
 const Pinned: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="pinned-solid-icon" as={PinnedSolid} w={8} />;
+    return <PinnedSolidIcon data-testid="pinned-solid-icon" w={8} h={8} />;
   } else {
     return (
       <Link to={"/pinned"}>
-        <Box data-testid="pinned-outline-icon" as={PinnedOutline} w={8} />
+        <PinnedOutlineIcon data-testid="pinned-outline-icon" w={8} h={8} />
       </Link>
     );
   }
@@ -66,11 +75,11 @@ const Pinned: React.FC<Props> = ({ selected }) => {
 
 const Profile: React.FC<Props> = ({ selected }) => {
   if (selected) {
-    return <Box data-testid="profile-solid-icon" as={ProfileSolid} w={8} />;
+    return <ProfileSolidIcon data-testid="profile-solid-icon" w={8} h={8} />;
   } else {
     return (
       <Link to={"/profile"}>
-        <Box data-testid="profile-outline-icon" as={ProfileOutline} w={8} />
+        <ProfileOutlineIcon data-testid="profile-outline-icon" w={8} h={8} />
       </Link>
     );
   }

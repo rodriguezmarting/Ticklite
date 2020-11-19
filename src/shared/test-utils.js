@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import { render } from "@testing-library/react";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ChakraProvider } from "@chakra-ui/react";
 import { customTheme } from "./theme";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -20,10 +20,7 @@ const customRender = (
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
-        <ThemeProvider theme={customTheme}>
-          <CSSReset />
-          {children}
-        </ThemeProvider>
+        <ChakraProvider theme={customTheme}>{children}</ChakraProvider>
       </Provider>
     );
   }

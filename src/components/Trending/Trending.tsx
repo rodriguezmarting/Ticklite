@@ -8,7 +8,7 @@ import {
   trendingInitialState,
   ITrending,
 } from "../../ducks/trending";
-import { Box, Flex, Divider } from "@chakra-ui/core";
+import { Box, Flex, Divider } from "@chakra-ui/react";
 import { IQuestion } from "../../ducks/questions";
 import { formatNumber, Header } from "../../shared/utils";
 import { useHistory } from "react-router-dom";

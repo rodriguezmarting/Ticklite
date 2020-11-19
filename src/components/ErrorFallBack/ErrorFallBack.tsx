@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Box, Button } from "@chakra-ui/core";
+import { Flex, Box, Button } from "@chakra-ui/react";
 import { FallbackProps } from "react-error-boundary";
 
 const ErrorFallBack: React.FC<FallbackProps> = ({

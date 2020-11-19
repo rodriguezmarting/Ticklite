@@ -1,12 +1,13 @@
 import React from "react";
-import { Flex, Box, Button, Stack, Text } from "@chakra-ui/core";
+import { Flex, Box, Button, Stack, Text } from "@chakra-ui/react";
 import { IQuestion } from "../../ducks/questions";
 
-import { Pushpin2 as PinnedSolid } from "@emotion-icons/remix-fill/Pushpin2";
-import { Pushpin2 as PinnedOutline } from "@emotion-icons/remix-line/Pushpin2";
-import { Share } from "@emotion-icons/boxicons-solid/Share";
-import { Spy } from "@emotion-icons/remix-fill/Spy";
 import { ParseCaption } from "../../shared/utils";
+import {
+  ShareIcon,
+  PinnedSolidIcon,
+  PinnedOutlineIcon,
+} from "../../shared/theme";
 /* import { DotsHorizontalRounded as Dots } from "@emotion-icons/boxicons-regular/DotsHorizontalRounded"; */
 /* import { Settings } from "@emotion-icons/material/Settings"; */
 
@@ -21,6 +22,7 @@ const Question: React.FC<Props> = ({ question }) => {
         paddingX={6}
         paddingY={4}
         fontSize="lg"
+        textAlign="left"
         data-testid="question-title"
       >
         {question.title}
@@ -54,13 +56,12 @@ const Question: React.FC<Props> = ({ question }) => {
       <Flex direction="column" paddingX={6} paddingY={4} fontSize="md">
         <Flex direction="row" mb={2}>
           <PinnedQuestion isPinned={question.isPinned} />
-          <Box
+          <ShareIcon
             data-testid="share-icon"
-            as={Share}
             w={8}
+            h={8}
             transform="rotateY(180deg)"
           />
-          <Box ml={2} data-testid="spy-icon" as={Spy} w={8} />
           {/* <Box data-testid="dots-icon" as={Dots} w={10} /> */}
           {/* <Box data-testid="settings-icon" as={Settings} w={10} /> */}
         </Flex>
@@ -99,11 +100,11 @@ interface PinnedProps {
 const PinnedQuestion: React.FC<PinnedProps> = ({ isPinned }) => {
   if (isPinned) {
     return (
-      <Box mr={2} data-testid="pinned-solid-icon" as={PinnedSolid} w={8} />
+      <PinnedSolidIcon mr={2} data-testid="pinned-solid-icon" w={8} h={8} />
     );
   } else {
     return (
-      <Box mr={2} data-testid="pinned-outline-icon" as={PinnedOutline} w={8} />
+      <PinnedOutlineIcon mr={2} data-testid="pinned-outline-icon" w={8} h={8} />
     );
   }
 };
