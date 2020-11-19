@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Box, Button, Stack, Text } from "@chakra-ui/react";
-import { IQuestion } from "../../ducks/questions";
+import { IQuestion } from "../../shared/declarations";
 
 import { ParseCaption } from "../../shared/utils";
 import {

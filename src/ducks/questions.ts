@@ -2,27 +2,21 @@ import { Dispatch } from "redux";
 import api from "../shared/axios";
 import { createSelector } from "reselect";
 import produce from "immer";
-import { Status, StoreState } from "../shared/declarations";
+import {
+  Status,
+  StoreState,
+  IQuestion,
+  IPostQuestion,
+} from "../shared/declarations";
 import { AxiosResponse, AxiosError } from "axios";
-
-export interface IQuestion {
-  id: number;
-  title: string;
-  options: string[];
-  caption?: string;
-  authorId?: number;
-  authorName: string;
-  pins: number;
-  isPinned: boolean;
-  isAnswered?: boolean;
-  createdAt?: string | Date;
-  answeredAt?: string | Date;
-}
 
 export type ActionTypes =
   | "GET_QUESTIONS"
   | "GET_QUESTIONS_SUCCESS"
-  | "GET_QUESTIONS_ERROR";
+  | "GET_QUESTIONS_ERROR"
+  | "POST_QUESTION"
+  | "POST_QUESTION_SUCCESS"
+  | "POST_QUESTION_ERROR";
 
 export interface FetchQuestionsAction {
   type: "GET_QUESTIONS";
@@ -38,23 +32,44 @@ export interface FetchQuestionsErrorAction {
   payload: string;
 }
 
+export interface PostQuestionAction {
+  type: "POST_QUESTION";
+}
+
+export interface PostQuestionSuccessAction {
+  type: "POST_QUESTION_SUCCESS";
+  payload: IQuestion;
+}
+
+export interface PostQuestionErrorAction {
+  type: "POST_QUESTION_ERROR";
+  payload: string;
+}
+
 type Action =
   | FetchQuestionsAction
   | FetchQuestionsSuccessAction
-  | FetchQuestionsErrorAction;
+  | FetchQuestionsErrorAction
+  | PostQuestionAction
+  | PostQuestionSuccessAction
+  | PostQuestionErrorAction;
 
-const FETCH_QUESTIONS_ENDPOINT = "/questions";
+const QUESTIONS_ENDPOINT = "/questions";
 
 export interface QuestionsReducerState {
   data: IQuestion[];
   status: Status;
   error: string;
+  statusCreate?: Status;
+  errorCreate?: string;
 }
 
 export const questionsInitialState: QuestionsReducerState = {
   data: [],
   status: "LOADING",
   error: "",
+  statusCreate: "SUCCESS",
+  errorCreate: "",
 };
 
 export default function reducer(
@@ -77,6 +92,21 @@ export default function reducer(
         draft.status = "ERROR";
         draft.error = action.payload;
       });
+    case "POST_QUESTION":
+      return produce(state, (draft) => {
+        draft.statusCreate = "LOADING";
+      });
+    case "POST_QUESTION_SUCCESS":
+      return produce(state, (draft) => {
+        draft.data.push(action.payload);
+        draft.statusCreate = "SUCCESS";
+        draft.errorCreate = "";
+      });
+    case "POST_QUESTION_ERROR":
+      return produce(state, (draft) => {
+        draft.statusCreate = "ERROR";
+        draft.errorCreate = action.payload;
+      });
     default:
       return state;
   }
@@ -88,7 +118,7 @@ export function fetchQuestions() {
       type: "GET_QUESTIONS",
     });
     api
-      .get<IQuestion[]>(FETCH_QUESTIONS_ENDPOINT)
+      .get<IQuestion[]>(QUESTIONS_ENDPOINT)
       .then((response: AxiosResponse<IQuestion[]>) => {
         dispatch<FetchQuestionsSuccessAction>({
           type: "GET_QUESTIONS_SUCCESS",
@@ -104,8 +134,41 @@ export function fetchQuestions() {
   };
 }
 
-// TODO: This is a simple test to Reselect, probably will be removed.
+export function postQuestion({ title, options, caption = "" }: IPostQuestion) {
+  return async (dispatch: Dispatch) => {
+    dispatch<PostQuestionAction>({
+      type: "POST_QUESTION",
+    });
+    api
+      .post(QUESTIONS_ENDPOINT, {
+        title,
+        options,
+        caption,
+        authorId: 1,
+        authorName: "You",
+        pins: 0,
+        isPinned: false,
+        isAnswered: false,
+        createdAt: Date().toString(),
+        answeredAt: Date().toString(),
+      })
+      .then((response: AxiosResponse) => {
+        dispatch<PostQuestionSuccessAction>({
+          type: "POST_QUESTION_SUCCESS",
+          payload: response.data,
+        });
+      })
+      .catch((error: AxiosError) => {
+        dispatch<PostQuestionErrorAction>({
+          type: "POST_QUESTION_ERROR",
+          payload: error.message,
+        });
+      });
+  };
+}
+
 const questionsSelector = (state: StoreState) => state.questions;
+
 export const selectQuestions = createSelector(
   questionsSelector,
   (questions) => ({
@@ -134,3 +197,9 @@ export const selectQuestions = createSelector(
     error: questions.error,
   })
 );
+
+export const errorCreateSelector = (state: StoreState) =>
+  state.questions.errorCreate;
+
+export const statusCreateSelector = (state: StoreState) =>
+  state.questions.statusCreate;

@@ -1,9 +1,8 @@
 import { Dispatch } from "redux";
 import api from "../shared/axios";
 import produce from "immer";
-import { Status, StoreState } from "../shared/declarations";
+import { Status, StoreState, IQuestion } from "../shared/declarations";
 import { AxiosResponse, AxiosError } from "axios";
-import { IQuestion } from "./questions";
 
 export interface ITrending {
   id: number;

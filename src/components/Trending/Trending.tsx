@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import {
   TrendingReducerState,
   trendingSelector,
@@ -8,10 +10,10 @@ import {
   trendingInitialState,
   ITrending,
 } from "../../ducks/trending";
+import { IQuestion } from "../../shared/declarations";
+
 import { Box, Flex, Divider } from "@chakra-ui/react";
-import { IQuestion } from "../../ducks/questions";
 import { formatNumber, Header } from "../../shared/utils";
-import { useHistory } from "react-router-dom";
 
 const TrendingContainer: React.FC<{}> = () => {
   const dispatch = useDispatch();
