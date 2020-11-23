@@ -24,6 +24,7 @@ const QuestionsList: React.FC<Props> = ({
     case "ERROR": {
       return <Box>{questions.error}</Box>;
     }
+    case "IDLE":
     case "SUCCESS": {
       if (!questions.data.length) {
         return <Box>No questions yet!</Box>;

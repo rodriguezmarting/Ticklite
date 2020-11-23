@@ -39,6 +39,7 @@ export const TrendingPage: React.FC<Props> = ({
     case "ERROR": {
       return <Box>{trending.error}</Box>;
     }
+    case "IDLE":
     case "SUCCESS": {
       if (!trending.data.length) {
         return <Box>No trendings yet!</Box>;

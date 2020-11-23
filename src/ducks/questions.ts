@@ -66,9 +66,9 @@ export interface QuestionsReducerState {
 
 export const questionsInitialState: QuestionsReducerState = {
   data: [],
-  status: "LOADING",
+  status: "IDLE",
   error: "",
-  statusCreate: "SUCCESS",
+  statusCreate: "IDLE",
   errorCreate: "",
 };
 

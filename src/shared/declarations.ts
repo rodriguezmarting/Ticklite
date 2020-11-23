@@ -16,7 +16,7 @@ export interface IQuestion {
   answeredAt?: string | Date;
 }
 
-export type Status = "LOADING" | "SUCCESS" | "ERROR";
+export type Status = "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
 
 export type Layout = "LAYOUT2" | "LAYOUT3" | "LAYOUT4";
 
