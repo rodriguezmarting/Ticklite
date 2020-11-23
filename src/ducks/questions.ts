@@ -16,7 +16,8 @@ export type ActionTypes =
   | "GET_QUESTIONS_ERROR"
   | "POST_QUESTION"
   | "POST_QUESTION_SUCCESS"
-  | "POST_QUESTION_ERROR";
+  | "POST_QUESTION_ERROR"
+  | "DELETE_CREATE_QUESTION_ERROR";
 
 export interface FetchQuestionsAction {
   type: "GET_QUESTIONS";
@@ -46,13 +47,18 @@ export interface PostQuestionErrorAction {
   payload: string;
 }
 
+export interface DeleteCreateErrorAction {
+  type: "DELETE_CREATE_QUESTION_ERROR";
+}
+
 type Action =
   | FetchQuestionsAction
   | FetchQuestionsSuccessAction
   | FetchQuestionsErrorAction
   | PostQuestionAction
   | PostQuestionSuccessAction
-  | PostQuestionErrorAction;
+  | PostQuestionErrorAction
+  | DeleteCreateErrorAction;
 
 const QUESTIONS_ENDPOINT = "/questions";
 
@@ -106,6 +112,11 @@ export default function reducer(
       return produce(state, (draft) => {
         draft.statusCreate = "ERROR";
         draft.errorCreate = action.payload;
+      });
+    case "DELETE_CREATE_QUESTION_ERROR":
+      return produce(state, (draft) => {
+        draft.statusCreate = "IDLE";
+        draft.errorCreate = "";
       });
     default:
       return state;
@@ -164,6 +175,14 @@ export function postQuestion({ title, options, caption = "" }: IPostQuestion) {
           payload: error.message,
         });
       });
+  };
+}
+
+export function deleteCreateQuestionError() {
+  return (dispatch: Dispatch) => {
+    dispatch<DeleteCreateErrorAction>({
+      type: "DELETE_CREATE_QUESTION_ERROR",
+    });
   };
 }
 

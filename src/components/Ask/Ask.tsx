@@ -11,6 +11,9 @@ import {
   useRadioGroup,
   HStack,
   Text,
+  Alert,
+  AlertIcon,
+  CloseButton,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { Layout2Icon, Layout3Icon, Layout4Icon } from "../../shared/theme";
@@ -22,6 +25,7 @@ import {
   postQuestion,
   errorCreateSelector,
   statusCreateSelector,
+  deleteCreateQuestionError,
 } from "../../ducks/questions";
 
 type QuestionData = {
@@ -38,6 +42,7 @@ interface AskProps {
   error: string | undefined;
   status: Status | undefined;
   createQuestion: (data: IPostQuestion) => void;
+  clearError: () => void;
 }
 
 const AskContainer: React.FC = () => {
@@ -45,23 +50,28 @@ const AskContainer: React.FC = () => {
   const errorCreate = useSelector(errorCreateSelector);
   const statusCreate = useSelector(statusCreateSelector);
   const createQuestion = (data: IPostQuestion) => dispatch(postQuestion(data));
+  const clearError = () => dispatch(deleteCreateQuestionError());
   return (
     <Ask
       error={errorCreate}
       status={statusCreate}
       createQuestion={createQuestion}
+      clearError={clearError}
     />
   );
 };
 
-const Ask: React.FC<AskProps> = ({ error, status, createQuestion }) => {
+export const Ask: React.FC<AskProps> = ({
+  clearError,
+  error,
+  status,
+  createQuestion,
+}) => {
   const history = useHistory();
-
   const { register, handleSubmit, watch, errors, reset } = useForm<
     QuestionData
   >();
   const layoutWatch = watch("layout");
-
   const onSubmit = ({
     option1,
     option2,
@@ -103,6 +113,20 @@ const Ask: React.FC<AskProps> = ({ error, status, createQuestion }) => {
         </Text>
         <span className="rightElement" />
       </Flex>
+
+      {error && (
+        <Alert variant="solid" status="error">
+          <AlertIcon />
+          {error}
+          <CloseButton
+            onClick={clearError}
+            position="absolute"
+            right="8px"
+            top="8px"
+          />
+        </Alert>
+      )}
+
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <FormControl paddingX={4} paddingY={2}>
           <Input
